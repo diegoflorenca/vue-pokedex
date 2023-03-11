@@ -1,13 +1,12 @@
-<script>
-export default {
-	async mounted() {
-		const pokeData = await fetch('http://pokeapi.co/api/v2/pokedex/2/').then((response) => response.json());
-		this.pokemonList = pokeData.pokemon_entries;
-	},
-	data: () => ({
-		pokemonList: [],
-	}),
-};
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const pokemonList = ref([]);
+
+onMounted(async () => {
+	const pokeData = await fetch('http://pokeapi.co/api/v2/pokedex/2/').then((response) => response.json());
+	pokemonList.value = pokeData.pokemon_entries;
+});
 </script>
 
 <template>
