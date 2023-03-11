@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, ref, onMounted, computed } from 'vue';
+import PokedexCard from './components/PokedexCard.vue';
 
 const filteredPokemonText = ref([]);
-
 const pokemonStore = reactive({
 	list: [],
 	filterePokemonList: computed(() =>
@@ -23,12 +23,17 @@ onMounted(async () => {
 <template>
 	<div>
 		<h1>Pokedex</h1>
-		<p>Filtered Text: {{ filteredPokemonText }}</p>
+		<p>Filtered: {{ pokemonStore.filterePokemonList.length }}</p>
 		<input type="text" v-model="filteredPokemonText" />
 		<ul>
-			<li v-for="(pokemon, index) in pokemonStore.filterePokemonList" :key="`poke-${index}`">
-				{{ pokemon.pokemon_species.name }}
-			</li>
+			<PokedexCard
+				v-for="(pokemon, index) in pokemonStore.filterePokemonList"
+				:key="`poke-${index}`"
+				:number="pokemon.entry_number"
+				:name="pokemon.pokemon_species.name"
+			/>
+			<!-- {{ pokemon.pokemon_species.name }}
+			</PokedexCard> -->
 		</ul>
 	</div>
 </template>
