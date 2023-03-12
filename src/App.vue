@@ -6,17 +6,16 @@ const filteredPokemonText = ref([]);
 const pokemonStore = reactive({
 	list: [],
 	filterePokemonList: computed(() =>
-		pokemonStore.list.filter((pokemon) =>
-			pokemon.pokemon_species.name.includes(filteredPokemonText.value)
-		)
+		pokemonStore.list.filter((pokemon) => pokemon.name.includes(filteredPokemonText.value))
 	)
 });
 
 onMounted(async () => {
-	const pokeData = await fetch('http://pokeapi.co/api/v2/pokedex/2/').then((response) =>
+	const pokeData = await fetch('/.netlify/functions/pokedex/pokedex.js').then((response) =>
 		response.json()
 	);
-	pokemonStore.list = pokeData.pokemon_entries;
+	console.log(pokeData);
+	pokemonStore.list = pokeData;
 });
 </script>
 
@@ -29,11 +28,9 @@ onMounted(async () => {
 			<PokedexCard
 				v-for="(pokemon, index) in pokemonStore.filterePokemonList"
 				:key="`poke-${index}`"
-				:number="pokemon.entry_number"
-				:name="pokemon.pokemon_species.name"
+				:id="pokemon.id"
+				:name="pokemon.name"
 			/>
-			<!-- {{ pokemon.pokemon_species.name }}
-			</PokedexCard> -->
 		</ul>
 	</div>
 </template>

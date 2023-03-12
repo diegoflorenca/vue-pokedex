@@ -6,19 +6,15 @@ const props = defineProps({
 		type: String,
 		required: true
 	},
-	number: {
+	id: {
 		type: Number,
 		required: true
 	}
 });
-
-const displayName = computed(() => {
-	return props.name[0].toUpperCase() + props.name.substring(1);
-});
 </script>
 
 <template>
-	<li>{{ number }} - {{ displayName }}</li>
+	<li>{{ id }} - {{ name }}</li>
 </template>
 
 <style scoped></style>
